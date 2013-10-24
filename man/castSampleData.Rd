@@ -1,0 +1,27 @@
+\name{castSampleData}
+\alias{castSampleData}
+\title{Create a sample by taxa matrix from data in long format}
+\usage{
+  castSampleData(sample, taxon, count, transform.count = F)
+}
+\arguments{
+  \item{sample}{a vector of sample/site indicatros}
+
+  \item{taxon}{a vector of taxa indicators}
+
+  \item{count}{a vector of counts (or 0/1 for presence
+  absence data)}
+
+  \item{transform.count}{logical, if T the counts are
+  transformed to presence absence data}
+}
+\description{
+  Creates a sample by taxa matrix from data in long format
+}
+\examples{
+i <- sample(1:nrow(calibration), 10)
+pred.data <- calibration[calibration$sample \%in\% c(1:5),]
+setUpTaxonData(pred.data$sample, pred.data$taxon, pred.data$is.present,
+calibration$group, calibration$sample, calibration$taxon, calibration$is.present)
+}
+

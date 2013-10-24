@@ -1,0 +1,30 @@
+\name{predictSiteGroup}
+\alias{predictSiteGroup}
+\title{Posterior probability of group membership}
+\usage{
+  predictSiteGroup(data, center, invcov, group)
+}
+\arguments{
+  \item{data}{a matrix of site predictor variables}
+
+  \item{center}{a matrix of group means for the site
+  calibration data}
+
+  \item{invcov}{a pooled inverse coveraince matrix for the
+  site calibration data}
+
+  \item{group}{a vector of grouping indicators for the
+  calibration data}
+}
+\value{
+  a list: 1) a matrix of posterior probabilities of group
+  membership 2) the minimum distance of each site from the
+  group centroids (used to determine whether the site is an
+  outlier)
+}
+\description{
+  Uses results of lda to predict which group the site
+  belongs to based on the data for the site/sample. Tested!
+  Works! nsite * ngroup
+}
+

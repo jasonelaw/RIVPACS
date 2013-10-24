@@ -1,0 +1,27 @@
+\name{matchTaxa}
+\alias{matchTaxa}
+\title{Make the taxa in two different sample * taxa matrices match}
+\usage{
+  matchTaxa(from, to)
+}
+\arguments{
+  \item{from}{a nsample * ntaxa matrix}
+
+  \item{to}{a nsample * ntaxa matrix}
+}
+\value{
+  a matrix with the data in the from matrix expanded or
+  dropped so that the taxa are the same as the taxa in the
+  to matrix (i.e., they will have the same number of
+  columns and the same column names)
+}
+\description{
+  Data in the from matrix is expanded to match the taxa
+  occurring in the \code{to} matrix The matrices may (and
+  usually will) have different numbers of rows.  Taxa are
+  matched using \link{match} on the column names, so column
+  names must be set and names must match exactly in order
+  to be matched.  Taxa that are in \code{to} but not in
+  \code{from} will be 0 in the output matrix.
+}
+

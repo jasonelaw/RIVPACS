@@ -1,0 +1,35 @@
+\name{calculateRIVPACSMetrics}
+\alias{calculateRIVPACSMetrics}
+\title{Calculate RIVPACS metrics}
+\usage{
+  calculateRIVPACSMetrics(O, E, N, cutoff = 0.5)
+}
+\arguments{
+  \item{O}{the observed occurrence matrix}
+
+  \item{E}{a matrix of expected probabilities for the
+  RIVPACS model}
+
+  \item{N}{a matrix of expected probabilities for the null
+  model}
+
+  \item{cutoff}{a cutoff value to remove rare speces;
+  species with an expected model probability of less than
+  this value are removed.}
+}
+\description{
+  This function calculates the observed-expected ratio for
+  both the RIVPACS model and a null model.  In addition,
+  the Bray-Curtis metric of taxonomic dissimilarity are
+  calculated.
+}
+\examples{
+x <- matrix(rbinom(100, size = 1, prob = 0.5), ncol = 10)
+y <- matrix(c(0.1,0.8,0.9,0.2), ncol = 2)
+group <- rep(1:2, each = 5)
+E <- calculateExpected(y, x, group)
+N <- calculateNullExpected(x)
+z <- matrix(rbinom(20, size = 1, prob = 0.5), ncol = 10)
+calculateRIVPACSMetrics(z, E, N)
+}
+

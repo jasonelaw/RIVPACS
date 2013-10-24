@@ -1,0 +1,35 @@
+\name{calculateExpected}
+\alias{calculateExpected}
+\title{Calculate the expected number of species at a site based on a RIVPACS model}
+\usage{
+  calculateExpected(x, occur, group)
+}
+\arguments{
+  \item{x}{a site * group matrix of predicted group
+  membership probabilities from a RIVPACS model (for new
+  data)}
+
+  \item{occur}{the site * species binary matrix of
+  calibration data used to fit the RIVPACS model}
+
+  \item{group}{a vector of group indicators for the
+  calibration data}
+}
+\value{
+  a nsite (new data) * nspecies (in calibration data)
+  matrix of expected number of species
+}
+\description{
+  Calculate the expected number of species at a site based
+  on a RIVPACS model. The function uses a matrix of group
+  membership probabilities, the calibration matrix of
+  species occurrence data, and the calibration data group
+  indicators.
+}
+\examples{
+x <- matrix(rbinom(100, size = 1, prob = 0.5), ncol = 10)
+y <- matrix(c(0.1,0.8,0.9,0.2), ncol = 2)
+group <- rep(1:2, each = 5)
+calculateExpected(y, x, group)
+}
+

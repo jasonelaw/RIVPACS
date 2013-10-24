@@ -1,0 +1,11 @@
+Package: RIVPACS
+Type: Package
+Title: Fit RIVPACS type models and calculate metrics from RIVPACS predictions
+Version: 0.1
+Date: 2013-10-02
+Author: Jason Law
+Maintainer: Jason Law <jason.law@portlandoregon.gov>
+Depends: randomForest, MASS, nnet
+Description: RIVPACS models are used to measure the ecological health of a stream or river using calibration data collected from referece sites
+License: GPL-2
+Encoding: UTF-8
