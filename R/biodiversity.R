@@ -60,10 +60,12 @@ biodiversity <- function(sample, taxon, count,
             identical(ncol(sample), nrow(trait)))
   
   if (!identical(samples, rownames(site))) {
+    warning('Sites in the site.data data.frame without corresponding occurrence data are being removed')
     i <- match(rownames(site), samples)
     site <- site[i,]
   }
   if (!identical(taxa, rownames(trait))) {
+    warning('Taxa in the taxa.data data.frame without corresponding occurrence data are being removed')
     i <- match(rownames(trait), taxa)
     taxa <- taxa[i,]
   }
@@ -165,6 +167,25 @@ castSampleData <- function(sample, taxon, count, transform.count = F){
     count <- count > 0
   }
   x  <- data.frame(sample, taxon, count, stringsAsFactors = T)
-  ans <- acast(x, sample ~ taxon, value.var = 'count', fill = 0, drop = F)
+  ans <- acast(x, sample ~ taxon, value.var = 'count', fill = 0, drop = F, fun.aggregate = sum)
   return(ans)
+}
+
+
+#' Collapse sample data up to a list of higher level taxa.
+#' 
+#' Collapses the sample data in a biodiversity object up to a list of higher level taxa. For example,
+#' this allows sample data of multiple taxonomic resolutions to be integrated.
+#' @param sample a vector of sample/site indicatros
+#' @param taxon a vector of taxa indicators
+#'@importFrom igraph shortest.paths
+#'@importFrom ape as.igraph
+#'@export
+collapseTaxa <- function(x, taxa){
+  graph   <- as.igraph(as(getPhylo4(x), 'phylo'))
+  samples <- getSamples(x)
+  taxa    <- colnames(samples)
+  in.path <- shortest.paths(graph, v = taxa, to = nodes, mode = 'in') < Inf
+  x$samples <- apply(in.path, 2, function(i) rowSums(samples[,i, drop = F]))
+  x
 }

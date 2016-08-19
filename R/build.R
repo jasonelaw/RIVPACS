@@ -151,7 +151,7 @@ pooledCovariance <- function(x, group, inverse = FALSE){
   df         <- as.data.frame(x)
   df$group   <- group
   covlist <- dlply(df, .(group), function(x){
-    x <- subset(x, select = -group)
+    x <- x[, setdiff(names(x), 'group')]
     cov(x) * (nrow(x) - 1)
     })
   pooled.cov <- Reduce('+', covlist) / (sum(group.size) - length(group.size))
