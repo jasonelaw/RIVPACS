@@ -16,7 +16,7 @@
 #' @S3method predict rivpacs
 #' @method predict rivpacs
 #' @export
-predict.rivpacs <- function(object, newdata, cutoff = cutoff, outlier.probs = c(0.01, 0.05), ...){
+predict.rivpacs <- function(object, newdata, cutoff = 0.05, outlier.probs = c(0.01, 0.05), ...){
   if (missing(newdata)) {
     bug.pa    <- getSamples(object, pa = T)
     site.data <- getSites(object)
