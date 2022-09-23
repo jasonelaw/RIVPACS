@@ -178,14 +178,12 @@ castSampleData <- function(sample, taxon, count, transform.count = F){
 #' this allows sample data of multiple taxonomic resolutions to be integrated.
 #' @param sample a vector of sample/site indicatros
 #' @param taxon a vector of taxa indicators
-#'@importFrom igraph shortest.paths
-#'@importFrom ape as.igraph
 #'@export
 collapseTaxa <- function(x, taxa){
-  graph   <- as.igraph(as(getPhylo4(x), 'phylo'))
+  graph   <- ape:::as.igraph.phylo(as(getPhylo4(x), 'phylo'))
   samples <- getSamples(x)
   taxa    <- colnames(samples)
-  in.path <- shortest.paths(graph, v = taxa, to = nodes, mode = 'in') < Inf
+  in.path <- igraph::shortest.paths(graph, v = taxa, to = nodes, mode = 'in') < Inf
   x$samples <- apply(in.path, 2, function(i) rowSums(samples[,i, drop = F]))
   x
 }
