@@ -44,7 +44,6 @@ buildRIVPACS <- function(formula, data, type = c('lda', 'multinom', 'rf'), ...){
 }
 
 #' @rdname buildRIVPACS
-#' @S3method getSamples rivpacs
 #' @method getSamples rivpacs
 #' @export
 getSamples.rivpacs <- function(x, ...){
@@ -53,7 +52,6 @@ getSamples.rivpacs <- function(x, ...){
 }
 
 #' @rdname buildRIVPACS
-#' @S3method getSites rivpacs
 #' @method getSites rivpacs
 #' @export
 getSites.rivpacs <- function(x, ...){
@@ -90,7 +88,6 @@ getFormula <- function(x, ...) UseMethod("getFormula")
 getModel <- function(x, ...) UseMethod("getModel")
 
 #' @rdname buildRIVPACS
-#' @S3method getCalibrationData rivpacs
 #' @method getCalibrationData rivpacs
 #' @export
 getCalibrationData.rivpacs <- function(mod){
@@ -98,7 +95,6 @@ getCalibrationData.rivpacs <- function(mod){
 }
 
 #' @rdname buildRIVPACS
-#' @S3method getGroupMeans rivpacs
 #' @method getGroupMeans rivpacs
 #' @export
 getGroupMeans.rivpacs <- function(mod){
@@ -106,7 +102,6 @@ getGroupMeans.rivpacs <- function(mod){
 }
 
 #' @rdname buildRIVPACS
-#' @S3method getGroupInvCov rivpacs
 #' @method getGroupInvCov rivpacs
 #' @export
 getGroupInvCov.rivpacs <- function(mod){
@@ -114,7 +109,6 @@ getGroupInvCov.rivpacs <- function(mod){
 }
 
 #' @rdname buildRIVPACS
-#' @S3method getCalibrationGroups rivpacs
 #' @method getCalibrationGroups rivpacs
 #' @export
 getCalibrationGroups.rivpacs <- function(mod){
@@ -122,7 +116,6 @@ getCalibrationGroups.rivpacs <- function(mod){
 }
 
 #' @rdname buildRIVPACS
-#' @S3method getCalibrationVars rivpacs
 #' @method getCalibrationVars rivpacs
 #' @export
 getCalibrationVars.rivpacs <- function(mod){
@@ -130,7 +123,6 @@ getCalibrationVars.rivpacs <- function(mod){
 }
 
 #' @rdname buildRIVPACS
-#' @S3method getFormula rivpacs
 #' @method getFormula rivpacs
 #' @export
 getFormula.rivpacs <- function(mod){
@@ -138,7 +130,6 @@ getFormula.rivpacs <- function(mod){
 }
 
 #' @rdname buildRIVPACS
-#' @S3method getModel rivpacs
 #' @method getModel rivpacs
 #' @export
 getModel.rivpacs <- function(mod){
@@ -150,7 +141,7 @@ pooledCovariance <- function(x, group, inverse = FALSE){
   group.size <- table(group)
   df         <- as.data.frame(x)
   df$group   <- group
-  covlist <- dlply(df, .(group), function(x){
+  covlist <- plyr::dlply(df, .(group), function(x){
     x <- x[, setdiff(names(x), 'group')]
     cov(x) * (nrow(x) - 1)
     })

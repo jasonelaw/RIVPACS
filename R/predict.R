@@ -12,8 +12,7 @@
 #' will not be used to calculate metrics.
 #' @param outlier.probs p-value thresholds to report which data points are outliers.
 #' Only used if method used to fit the RIVPACS model was 'lda'
-#' @output a matrix of RIVPACS metrics
-#' @S3method predict rivpacs
+#' @returns a matrix of RIVPACS metrics
 #' @method predict rivpacs
 #' @export
 predict.rivpacs <- function(object, newdata, cutoff = 0.05, outlier.probs = c(0.01, 0.05), ...){
@@ -66,14 +65,13 @@ predict.rivpacs <- function(object, newdata, cutoff = 0.05, outlier.probs = c(0.
 #' @return a list:  1) a matrix of posterior probabilities of group
 #'   membership 2) the minimum distance of each site from the group centroids
 #'   (used to determine whether the site is an outlier)
-#' @importFrom plyr aaply
 predictSiteGroup <- function(data, center, invcov, group){
   #x <- model.frame(formula, data)
   group.size <- as.numeric(table(group))
   distance <- function(center, x, invcov){
     mahalanobis(x, center, invcov, inverted = T)
   }
-  dist <- aaply(center, 1, distance, x = data, invcov = invcov)
+  dist <- plyr::aaply(center, 1, distance, x = data, invcov = invcov)
   group.prob <- group.size * exp(-0.5 * dist)
   min.dist   <- apply(dist, 2, min)
   ans        <- t(group.prob) / colSums(group.prob)

@@ -14,7 +14,7 @@
 #' @param sample a site/sample identifier describing the unit of data collection
 #'   for the study.
 #' @param taxon  a taxon identfier that uniquely describes each taxon.
-#' @param count
+#' @param count a vector of counts of individuals
 #' @param site a two sided formula describing the site data to use.  The left 
 #'   hand side should contain the site/sample identifiers that match the
 #'   \code{sample} argument.  The right hand side contains the variables to use.
@@ -97,7 +97,6 @@ getTraits <- function(x, ...){
 #'@rdname biodiversity
 #' @param x a \code{biodiversity} object
 #' @param pa logical; if T presence absence data is returned rather than counts
-#' @S3method getSamples biodiversity
 #' @method getSamples biodiversity
 getSamples.biodiversity <- function(x, pa = F, ...){
   retval <- x$sample
@@ -108,7 +107,6 @@ getSamples.biodiversity <- function(x, pa = F, ...){
 }
 
 #'@rdname biodiversity
-#'@S3method getSites biodiversity
 #'@method getSites biodiversity
 #'@export
 getSites.biodiversity <- function(x, ...){
@@ -120,7 +118,6 @@ getSites.biodiversity <- function(x, ...){
 }
 
 #'@rdname biodiversity
-#'@S3method getSites biodiversity
 #'@method getSites biodiversity
 getPhylo4.biodiversity <- function(x, ...){
   retval <- x$phylo
@@ -130,7 +127,6 @@ getPhylo4.biodiversity <- function(x, ...){
 }
 
 #'@rdname biodiversity
-#'@S3method getTraits biodiversity
 getTraits.biodiversity <- function(x, ...){
   retval <- x$trait
   if (is.null(retval)) {
@@ -140,7 +136,6 @@ getTraits.biodiversity <- function(x, ...){
 }
 
 #'@rdname biodiversity
-#'@S3method print biodiversity
 #'@method print biodiversity
 print.biodiversity <- function(x, ...){
   cat('A biodiversity object:\n')
