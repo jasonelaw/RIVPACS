@@ -44,6 +44,18 @@ selectLDA <- function(formula, data, k, criterion = 'tau2', nsol = 1, ...) {
   mods
 }
 
+#' Resample a vector
+#' 
+#' This function adapted from the resample function in \code{?sample}. It silently
+#' returns the whole vector in random order when size > length(x).
+#' @param x a vector
+#' @param n sample size
+#' @return a vector of length n with the sample
+resample <- function(x, size = length(x), ...){
+  n <- length(x)
+  x[sample.int(n, size = pmin.int(n, size), ...)]
+} 
+
 #'Subsample samples of organisms to a fixed count
 #'
 #'Subsample samples of organizms to a fixed count.
@@ -61,12 +73,7 @@ selectLDA <- function(formula, data, k, criterion = 'tau2', nsol = 1, ...) {
 rarify <- function(sample, taxon, count, n){
   doRarify <- function(x, n){
     individuals <- rep(x$taxon, x$count)
-    li <- length(individuals)
-    if(li < n){
-      ans <- sample(individuals, replace = F)
-    } else {
-      ans <- sample(individuals, size = n, replace = F)
-    }
+    ans <- resample(individuals, size = n, replace = F)
     ans <- as.data.frame(table(taxon = ans), responseName = 'count')
   }
   x <- data.frame(sample, taxon, count)
